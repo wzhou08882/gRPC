@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.cpedemo";
+option java_outer_classname = "CpeDemoProto";
+
+package cpedemo;
+
+// Interface exported by the server.
+service CpeDemo {
+  rpc Register(CpeInfo) returns (MsgStruc) {}
+
+  rpc Subscribe(CpeInfo) returns (stream MsgStruc) {}
+
+  rpc Report(Cpe2Cm) returns (MsgStruc) {}
+
+}
+
+message CpeInfo {
+  string localIp = 1;
+  string externalIp = 2;
+  string cpeName = 3;
+  string cpeUuid = 4;
+  string other = 5;
+}
+
+message MsgStruc {
+  int32 msgId = 1;
+  string message = 2;
+}
+
+message Cpe2Cm {
+  string cpeUuid = 1;
+  MsgStruc resInfo = 2;
+}
+
+message Cm2Cpe {
+  string cpeUuid = 1;
+  MsgStruc configInfo = 2;
+}
